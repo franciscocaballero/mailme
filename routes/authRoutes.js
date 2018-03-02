@@ -15,5 +15,12 @@ module.exports = (app) => {
   app.get('/auth/google/callback', passport.authenticate('google'));
   //once user gets sent back to '/auth/google/callback' they will now have code in URL
   //telling gserver that user isnt trying to authenticate for the first time
+app.get('/api/logout', (req,res) => {
+  req.logout();
+  res.send(req.user);
+} )
 
+  app.get('/api/current_user', (req,res) => {
+    res.send(req.user);
+  });
 };

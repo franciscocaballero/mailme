@@ -8,6 +8,19 @@ const User = mongoose.model('users');
 // ^ one arug means we are trying to fetch something from our model
 //^ User object is our model class
 
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+  //user.id is a token stuffed into cookie
+});
+// user is what we just pulld out of te database
+
+passport.deserializeUser((id, done) => {
+  User.findById(id)
+    .then(user => {
+      done(null, user);
+    })
+});
+//^ turns cookie in to a instance || 'user'
 passport.use(new GoogleStrategy({
   clientID: keys.googleClinetID,
   clientSecret: keys.googleClientSecret,
